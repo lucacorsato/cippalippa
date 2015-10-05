@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="it-it">
+<head>
+ {% include head.html %}
+</head>
+
+<body class="layout-reverse">
+  {% include sidebar.html %}
+
+<div class="content container">
+  <div class="post">
+    <h1 class="post-title">{{ page.title }}</h1>
+    <span class="post-date">{{ page.date | date_to_string }} // archeosticker #{{ page.numero }}</span>
+    <img class"sticker" src="/public/images/stickers/{{ page.image }}">
+
+    <div class="share-page">
+      <small>Attaccala questa #archeosticker su </small> 
+      <a href="https://twitter.com/intent/tweet?text={{ page.title }}&url={{ site.url }}{{ page.url }}&via={{ site.author.twitter }}&related={{ site.author.twitter }}" rel="nofollow" target="_blank" title="Share on Twitter"><i class="fa fa-twitter-square"></i> Twitter</a>
+      <a href="https://facebook.com/sharer.php?u={{ site.url }}{{ page.url }}" rel="nofollow" target="_blank" title="Share on Facebook"><i class="fa fa-facebook-official"></i> Facebook</a>
+    </div>
+
+    {% if page.image.feature %}
+    <div class="sticker">
+    <img src=
+      {% if page.image.feature contains 'http' %}
+        "{{ page.image.feature }}"
+      {% else %}
+        "{{ site.url }}/public/images/stickers/{{ page.sticker }}"
+      {% endif %}
+    {% endif %}
+
+    <p class="post-tags">
+    {% if page.tags != empty %}<br />
+      {% for tag in page.tags %}
+        <a href="{{ '-ref' | prepend: tag | replace: ' ','-' | prepend: 'tags/#' | prepend: site.baseurl }}"><i class="fa fa-tags"></i> {{ tag }}</a>{% unless forloop.last %}, {% endunless %}
+      {% endfor %}
+    {% endif %}
+    </p>
+
+  <hr>
+    <table class="wiki">
+      <tr class="wiki">
+          <td class="wiki"><i class="fa fa-wikipedia-w"></i> {{ page.title }} su<a href="{{ page.wiki }}"> Wikipedia</a></td>
+          <td class="wiki"><i class="fa fa-file-image-o"></i> Fonte di {{ page.title }} su <a href="{{ page.source }}">  {{ page.source-name }}</a></td>
+      </tr>
+      
+      <tr class="wiki">
+        <td class="wiki"><i class="fa fa-cogs"></i> assemblata da:
+          <a href="{{ page.social-autore }}">{{ page.autore }}</a>
+        </td>
+        <td class="wiki"><i class="fa fa-bolt"></i> idea di:
+          <a href="{{ page.social-idea }}">{{ page.idea }}</a>
+        </td>
+      </tr>
+    </table>
+
+
+
+    <p class="post-info"><i class="fa fa-download"></i> <a href="https://github.com/archeostickers/archeostickers.github.io/blob/master/public/images/stickers_vettoriali/{{ page.thumb }}">Scarica {{ page.thumb }} da Github</a></p>
+
+    <p class="post-info"><i class="fa fa-info-circle"></i><a href="{{ site.url }}{{ site.baseurl }}pages/istruzioni/#5"> Istruzioni per scaricare e riusare i file</a></p>
+    
+    <hr>
+
+    {{ content }}
+
+    <p class="licenza"><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Licenza Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>Le archeosticker sono distribuite con Licenza <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribuzione - Condividi allo stesso modo 4.0 Internazionale</a>.</p>
+
+
+  </div>
+
+
+
+  <hr />
+
+  <!-- disqus -->
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES * * */
+      var disqus_shortname = 'archeostickers';
+      
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+  <div class="related">
+    <h2>Related Posts</h2>
+    <ul class="related-posts">
+      {% for post in site.related_posts limit:3 %}
+        <li>
+          <h3>
+            <a href="{{ post.url }}">
+              {{ post.title }}
+              <small>{{ post.date | date_to_string }}</small>
+            </a>
+          </h3>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% include footer.html %}
+</div>
+{% include analytics.html %}
+</body>
+</html>
